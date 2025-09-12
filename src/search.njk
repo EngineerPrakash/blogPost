@@ -13,7 +13,7 @@ permalink: /search/
   (function(){
     const input = document.getElementById('search-input');
     const results = document.getElementById('results');
-    const base = '{{ site.base or "" }}';
+    const base = '{{ env.base or "" }}';
     let index = [];
     let ready = false;
     function render(items){

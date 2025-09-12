@@ -1,10 +1,9 @@
 {
   "version": 2,
-  "buildCommand": "npm run build",
+  "buildCommand": "ELEVENTY_ENV=production npm run build",
   "outputDirectory": "dist",
   "framework": null,
   "rewrites": [
     { "source": "/feed", "destination": "/feed.xml" }
   ]
 }
-

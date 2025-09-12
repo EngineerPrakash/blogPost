@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{% if title %}{{ title }} · {% endif %}{{ site.title }}</title>
     <meta name="description" content="{{ description or site.description }}" />
-    <link rel="alternate" type="application/rss+xml" href="{{ site.base }}/feed.xml" title="{{ site.title }}" />
-    <link rel="stylesheet" href="{{ site.base }}/assets/styles.css" />
-    <script src="{{ site.base }}/assets/site.js" defer></script>
+    <link rel="alternate" type="application/rss+xml" href="{{ env.base }}/feed.xml" title="{{ site.title }}" />
+    <link rel="stylesheet" href="{{ env.base }}/assets/styles.css" />
+    <script src="{{ env.base }}/assets/site.js" defer></script>
   </head>
   <body>
     <script>

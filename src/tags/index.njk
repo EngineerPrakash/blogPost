@@ -8,7 +8,7 @@ permalink: /tags/
 <ul class="tag-list">
   {% for tag in collections.tagList %}
     <li>
-      <a href="{{ site.base }}/tag/{{ tag | url }}/">{{ tag }}</a>
+      <a href="{{ env.base }}/tag/{{ tag | url }}/">{{ tag }}</a>
       <span class="count">({{ collections[tag].length }})</span>
     </li>
   {% endfor %}

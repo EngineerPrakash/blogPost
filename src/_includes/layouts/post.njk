@@ -9,7 +9,7 @@ layout: layouts/base.njk
     {% if tags %}
       ·
       {% for tag in tags %}
-        <a class="tag" href="{{ site.base }}/tag/{{ tag | url }}">{{ tag }}</a>{% if not loop.last %}, {% endif %}
+        <a class="tag" href="{{ env.base }}/tag/{{ tag | url }}">{{ tag }}</a>{% if not loop.last %}, {% endif %}
       {% endfor %}
     {% endif %}
   </p>

@@ -6,13 +6,13 @@ eleventyExcludeFromCollections: true
 <rss version="2.0">
   <channel>
     <title>{{ site.title }}</title>
-    <link>{{ site.url }}{{ site.base }}/</link>
+    <link>{{ site.url }}{{ env.base }}/</link>
     <description>{{ site.description }}</description>
     {% for post in collections.posts | slice(0, 20) %}
     <item>
       <title>{{ post.data.title }}</title>
-      <link>{{ site.url }}{{ site.base }}{{ post.url }}</link>
-      <guid>{{ site.url }}{{ site.base }}{{ post.url }}</guid>
+      <link>{{ site.url }}{{ env.base }}{{ post.url }}</link>
+      <guid>{{ site.url }}{{ env.base }}{{ post.url }}</guid>
       <pubDate>{{ post.date.toUTCString() }}</pubDate>
       {% if post.data.description %}
       <description><![CDATA[{{ post.data.description }}]]></description>

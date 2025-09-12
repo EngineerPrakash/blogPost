@@ -1,5 +1,5 @@
 <article class="post-card">
-  <h2><a href="{{ site.base }}{{ post.url }}">{{ post.data.title }}</a></h2>
+  <h2><a href="{{ env.base }}{{ post.url }}">{{ post.data.title }}</a></h2>
   <p class="meta">
     <time datetime="{{ post.date | htmlDateString }}">{{ post.date | date }}</time>
     {% if post.data.tags %} · {{ post.data.tags | join(', ') }}{% endif %}

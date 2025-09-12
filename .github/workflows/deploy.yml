@@ -29,6 +29,8 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
+        env:
+          ELEVENTY_ENV: production
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -44,4 +46,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-

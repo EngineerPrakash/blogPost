@@ -18,9 +18,9 @@ permalink: "/{% if pagination.pageNumber > 0 %}page/{{ pagination.pageNumber + 1
 
 <nav class="pager">
   {% if pagination.href.previous %}
-    <a class="prev" href="{{ site.base }}{{ pagination.href.previous }}">← Newer</a>
+    <a class="prev" href="{{ env.base }}{{ pagination.href.previous }}">← Newer</a>
   {% endif %}
   {% if pagination.href.next %}
-    <a class="next" href="{{ site.base }}{{ pagination.href.next }}">Older →</a>
+    <a class="next" href="{{ env.base }}{{ pagination.href.next }}">Older →</a>
   {% endif %}
 </nav>
