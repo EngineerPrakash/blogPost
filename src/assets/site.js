@@ -79,4 +79,22 @@
   }
   if(document.readyState !== 'loading') setupCopyButtons();
   else document.addEventListener('DOMContentLoaded', setupCopyButtons);
+
+  // Back to top
+  function setupToTop(){
+    const btn = document.createElement('a');
+    btn.id = 'toTop';
+    btn.href = '#top';
+    btn.className = 'btn';
+    btn.textContent = 'Top';
+    document.body.appendChild(btn);
+    function onScroll(){
+      const scrolled = document.documentElement.scrollTop || document.body.scrollTop;
+      if(scrolled > 600) btn.classList.add('show'); else btn.classList.remove('show');
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+  if(document.readyState !== 'loading') setupToTop();
+  else document.addEventListener('DOMContentLoaded', setupToTop);
 })();
