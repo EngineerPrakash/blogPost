@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="{{ site.language | default('en') }}">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% if title %}{{ title }} · {% endif %}{{ site.title }}</title>
+    <meta name="description" content="{{ description or site.description }}" />
+    <link rel="alternate" type="application/rss+xml" href="{{ site.base }}/feed.xml" title="{{ site.title }}" />
+    <link rel="stylesheet" href="{{ site.base }}/assets/styles.css" />
+    <script src="{{ site.base }}/assets/site.js" defer></script>
+  </head>
+  <body>
+    <script>
+      // Initialize theme early to avoid flash
+      (function(){
+        try {
+          const saved = localStorage.getItem('theme');
+          if(saved){ document.documentElement.setAttribute('data-theme', saved); }
+        } catch(e) {}
+      })();
+    </script>
+    {% include "components/header.njk" %}
+    <main class="container">
+      {{ content | safe }}
+    </main>
+    {% include "components/footer.njk" %}
+
+    {# Analytics (Plausible or Umami) configurable via site._data #}
+    {% if site.analytics and site.analytics.provider == 'plausible' and site.analytics.domain %}
+      <script defer data-domain="{{ site.analytics.domain }}" src="https://plausible.io/js/script.js"></script>
+    {% elif site.analytics and site.analytics.provider == 'umami' and site.analytics.src and site.analytics.website_id %}
+      <script async defer data-website-id="{{ site.analytics.website_id }}" src="{{ site.analytics.src }}"></script>
+    {% endif %}
+  </body>
+  </html>

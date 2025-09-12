@@ -1,0 +1,14 @@
+{
+  "name": "daily-blog",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Personal blog built with Eleventy (11ty)",
+  "scripts": {
+    "dev": "eleventy --serve --port=8080",
+    "build": "eleventy"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^2.0.1"
+  }
+}
+

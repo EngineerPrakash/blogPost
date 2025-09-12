@@ -1,0 +1,18 @@
+---
+layout: layouts/base.njk
+pagination:
+  data: collections.tagList
+  size: 1
+  alias: tag
+  addAllPagesToCollections: true
+permalink: /tag/{{ tag | url }}/
+---
+
+<h1>#{{ tag }}</h1>
+<div class="posts">
+  {% for post in collections[tag] %}
+    {% set post = post %}
+    {% include "../_includes/components/post_card.njk" %}
+  {% endfor %}
+</div>
+

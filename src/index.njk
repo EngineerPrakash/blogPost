@@ -1,0 +1,26 @@
+---
+layout: layouts/base.njk
+title: Home
+pagination:
+  data: collections.posts
+  size: 5
+  alias: posts
+permalink: "/{% if pagination.pageNumber > 0 %}page/{{ pagination.pageNumber + 1 }}/{% endif %}"
+---
+
+<h1>Latest Posts</h1>
+<div class="posts">
+  {% for post in posts %}
+    {% set post = post %}
+    {% include "components/post_card.njk" %}
+  {% endfor %}
+</div>
+
+<nav class="pager">
+  {% if pagination.href.previous %}
+    <a class="prev" href="{{ site.base }}{{ pagination.href.previous }}">← Newer</a>
+  {% endif %}
+  {% if pagination.href.next %}
+    <a class="next" href="{{ site.base }}{{ pagination.href.next }}">Older →</a>
+  {% endif %}
+</nav>
