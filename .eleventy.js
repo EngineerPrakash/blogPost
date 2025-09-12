@@ -1,7 +1,6 @@
 module.exports = function (eleventyConfig) {
   // Copy assets directly
   eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
-  eleventyConfig.addPassthroughCopy("src/CNAME");
   eleventyConfig.addWatchTarget("src/assets/styles.css");
 
   // Filters

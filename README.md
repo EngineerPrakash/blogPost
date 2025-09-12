@@ -35,6 +35,7 @@
 2. Ensure default branch is `main`.
 3. GitHub Actions workflow `.github/workflows/deploy.yml` builds and deploys to Pages on push.
 4. In repo Settings → Pages, set Source to "GitHub Actions" (if needed).
+5. If using a project site (https://<user>.github.io/<repo>), set `site.base` in `src/_data/site.json` to `"/<repo>"`. For a user/org site (https://<user>.github.io), keep it `""`.
 
 ### Netlify
 
@@ -51,5 +52,4 @@
 ## Custom Domain
 
 - Replace `src/CNAME` with your domain (e.g., `blog.example.com`).
-- Update `src/_data/site.json` `url` to `https://your-domain` for correct RSS/sitemap.
-
+- Update `src/_data/site.json` `url` to `https://your-domain` and keep `base` to `""`.

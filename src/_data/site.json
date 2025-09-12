@@ -2,8 +2,8 @@
   "title": "My Daily Blog",
   "description": "Daily posts on different subjects.",
   "author": "Your Name",
-  "url": "http://localhost:8080",
-  "base": "",
+  "url": "https://EngineerPrakash.github.io",
+  "base": "/blogPost",
   "email": "you@example.com",
   "language": "en",
   "analytics": {
