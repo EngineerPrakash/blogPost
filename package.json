@@ -5,10 +5,10 @@
   "description": "Personal blog built with Eleventy (11ty)",
   "scripts": {
     "dev": "eleventy --serve --port=8080",
-    "build": "eleventy"
+    "build": "eleventy",
+    "new": "node scripts/new-post.mjs"
   },
   "devDependencies": {
     "@11ty/eleventy": "^2.0.1"
   }
 }
-

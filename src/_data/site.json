@@ -7,6 +7,16 @@
   "tagline": "Simple daily writing on tech, life, and ideas.",
   "email": "you@example.com",
   "language": "en",
+  "repo": {
+    "provider": "github",
+    "owner": "EngineerPrakash",
+    "name": "blogPost",
+    "branch": "main"
+  },
+  "features": {
+    "showNewPostLink": true,
+    "showEditLink": true
+  },
   "analytics": {
     "provider": "",
     "domain": "",

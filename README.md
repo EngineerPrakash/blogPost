@@ -12,6 +12,11 @@
 - Tags are arrays in front matter, e.g. `tags: [tech, notes]`.
 - Add pages like `src/about.njk` using `layout: layouts/page.njk`.
 
+### Create a post
+
+- CLI (recommended): `npm run new -- --title "My Post" --tags tech,notes --cover /assets/cover-abstract-1.svg`
+- GitHub UI: Use the header’s “New Post” link or go to `https://github.com/EngineerPrakash/blogPost/new/main?filename=src/posts/new-post.md` and paste the template shown on `/admin/`.
+
 ## Search
 
 - A lightweight client-side search is available at `/search/`.

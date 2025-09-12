@@ -57,6 +57,12 @@ layout: layouts/base.njk
 
   {% include "../components/author.njk" %}
 
+  {% if site.features and site.features.showEditLink and site.repo and site.repo.provider == 'github' %}
+  <p class="meta" style="margin-top:12px">
+    <a href="https://github.com/{{ site.repo.owner }}/{{ site.repo.name }}/edit/{{ site.repo.branch | default('main') }}/{{ page.inputPath }}" rel="noopener" target="_blank">Edit this post on GitHub</a>
+  </p>
+  {% endif %}
+
   {# Optional comments via Giscus #}
   {% if site.comments and site.comments.provider == 'giscus' and site.comments.giscus and site.comments.giscus.repo and site.comments.giscus.repoId and site.comments.giscus.category and site.comments.giscus.categoryId %}
   <section class="comments">

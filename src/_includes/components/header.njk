@@ -7,6 +7,10 @@
       <a href="{{ env.base }}/search/">Search</a>
       <a href="{{ env.base }}/about/">About</a>
       <a href="{{ env.base }}/feed.xml">RSS</a>
+      {% if site.features and site.features.showNewPostLink and site.repo and site.repo.provider == 'github' %}
+        <a class="btn" href="https://github.com/{{ site.repo.owner }}/{{ site.repo.name }}/new/{{ site.repo.branch | default('main') }}?filename=src/posts/new-post.md" rel="noopener" target="_blank">New Post</a>
+        <a href="{{ env.base }}/admin/">Admin</a>
+      {% endif %}
     </nav>
     <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
       <span></span><span></span><span></span>
