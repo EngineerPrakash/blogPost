@@ -3,17 +3,24 @@ layout: layouts/base.njk
 ---
 
 <article class="post">
-  <h1>{{ title }}</h1>
-  <p class="meta">
-    <time datetime="{{ date | htmlDateString }}">{{ date | date }}</time>
-    {% if tags %}
-      ·
-      {% for tag in tags %}
-        <a class="tag" href="{{ env.base }}/tag/{{ tag | url }}">{{ tag }}</a>{% if not loop.last %}, {% endif %}
-      {% endfor %}
-    {% endif %}
-  </p>
-  <div class="content">
+  {% if cover %}
+    <div class="post-cover">
+      <img src="{{ cover }}" alt="" loading="lazy" />
+    </div>
+  {% endif %}
+  <header class="post-header">
+    <h1>{{ title }}</h1>
+    <p class="meta">
+      <time datetime="{{ date | htmlDateString }}">{{ date | date }}</time>
+      {% if tags %}
+        ·
+        {% for tag in tags %}
+          <a class="chip" href="{{ env.base }}/tag/{{ tag | url }}">{{ tag }}</a>
+        {% endfor %}
+      {% endif %}
+    </p>
+  </header>
+  <div class="content prose">
     {{ content | safe }}
   </div>
 </article>

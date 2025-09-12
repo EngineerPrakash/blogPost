@@ -8,8 +8,17 @@ pagination:
 permalink: "/{% if pagination.pageNumber > 0 %}page/{{ pagination.pageNumber + 1 }}/{% endif %}"
 ---
 
-<h1>Latest Posts</h1>
-<div class="posts">
+<section class="hero">
+  <h1>{{ site.title }}</h1>
+  <p class="tagline">{{ site.tagline }}</p>
+  <div class="hero-actions">
+    <a class="btn btn-primary" href="#posts">Read Latest</a>
+    <a class="btn" href="{{ env.base }}/tags/">Browse Tags</a>
+  </div>
+</section>
+
+<h2 id="posts">Latest Posts</h2>
+<div class="posts grid">
   {% for post in posts %}
     {% set post = post %}
     {% include "components/post_card.njk" %}
