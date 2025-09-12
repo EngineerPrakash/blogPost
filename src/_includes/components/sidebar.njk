@@ -1,0 +1,42 @@
+<aside class="sidebar" aria-label="Sidebar">
+  <section class="widget about">
+    <div class="about-inner">
+      <img class="avatar" src="{{ env.base }}/assets/avatar.svg" alt="" width="64" height="64" />
+      <div>
+        <h3>About</h3>
+        <p>{{ site.tagline or 'Notes on tech, life, and ideas.' }}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="widget recent">
+    <h3>Recent Posts</h3>
+    <ul>
+      {% for p in collections.posts | slice(0,5) %}
+        <li><a href="{{ env.base }}{{ p.url }}">{{ p.data.title }}</a>
+          <span class="date">{{ p.date | date }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section class="widget tags">
+    <h3>Tags</h3>
+    <div class="tag-cloud">
+      {% for t in collections.tagList %}
+        {% set count = collections[t].length %}
+        <a href="{{ env.base }}/tag/{{ t | url }}/" style="--count: {{ count }}">{{ t }}</a>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="widget newsletter">
+    <h3>Newsletter</h3>
+    <p>Get new posts in your inbox.</p>
+    <form onsubmit="event.preventDefault(); alert('Thanks! (Demo form)')">
+      <input type="email" required placeholder="you@example.com" aria-label="Email" />
+      <button class="btn btn-primary" type="submit">Subscribe</button>
+    </form>
+  </section>
+</aside>
+

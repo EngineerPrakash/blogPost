@@ -29,9 +29,12 @@
       })();
     </script>
     {% include "components/header.njk" %}
-    <main class="container">
-      {{ content | safe }}
-    </main>
+    <div class="container layout">
+      <main>
+        {{ content | safe }}
+      </main>
+      {% include "components/sidebar.njk" %}
+    </div>
     {% include "components/footer.njk" %}
 
     {# Analytics (Plausible or Umami) configurable via site._data #}

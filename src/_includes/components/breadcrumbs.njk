@@ -1,0 +1,18 @@
+{% set segments = page.url | trim('/') | split('/') %}
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <a href="{{ env.base }}/">Home</a>
+  {% if segments[0] %}
+    {% for seg in segments %}
+      {% if seg %}
+        <span class="sep">/</span>
+        {% set href = '/' + (segments | slice(0, loop.index) | join('/')) + '/' %}
+        {% if not loop.last %}
+          <a href="{{ env.base }}{{ href }}">{{ seg | replace('-', ' ') }}</a>
+        {% else %}
+          <span aria-current="page">{{ title or seg | replace('-', ' ') }}</span>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+</nav>
+

@@ -18,10 +18,39 @@ permalink: "/{% if pagination.pageNumber > 0 %}page/{{ pagination.pageNumber + 1
 </section>
 
 <h2 id="posts">Latest Posts</h2>
-<div class="posts grid">
-  {% for post in posts %}
-    {% set post = post %}
-    {% include "components/post_card.njk" %}
+
+{% if posts and posts | length > 0 %}
+  {% set featured = posts[0] %}
+  <article class="featured">
+    {% if featured.data.cover %}
+      <a class="cover" href="{{ env.base }}{{ featured.url }}">
+        <img src="{{ featured.data.cover }}" alt="" loading="lazy" />
+      </a>
+    {% endif %}
+    <div class="content">
+      <h2><a href="{{ env.base }}{{ featured.url }}">{{ featured.data.title }}</a></h2>
+      <p class="meta">
+        <time datetime="{{ featured.date | htmlDateString }}">{{ featured.date | date }}</time>
+        · {{ featured.templateContent | readTime }}
+      </p>
+      <p>{{ featured.templateContent | excerpt(36) }}</p>
+      <a class="btn" href="{{ env.base }}{{ featured.url }}">Read more</a>
+    </div>
+  </article>
+{% endif %}
+
+<div class="post-list">
+  {% for p in posts | slice(1) %}
+    <article class="post-row">
+      <div class="info">
+        <h3><a href="{{ env.base }}{{ p.url }}">{{ p.data.title }}</a></h3>
+        <p class="meta"><time datetime="{{ p.date | htmlDateString }}">{{ p.date | date }}</time> · {{ p.templateContent | readTime }}</p>
+        <p class="excerpt">{{ p.templateContent | excerpt(30) }}</p>
+      </div>
+      <div class="more">
+        <a class="btn" href="{{ env.base }}{{ p.url }}">Read</a>
+      </div>
+    </article>
   {% endfor %}
 </div>
 

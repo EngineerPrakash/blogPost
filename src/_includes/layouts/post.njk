@@ -2,6 +2,7 @@
 layout: layouts/base.njk
 ---
 
+{% include "../components/breadcrumbs.njk" %}
 <article class="post">
   {% if cover %}
     <div class="post-cover">
@@ -12,6 +13,7 @@ layout: layouts/base.njk
     <h1>{{ title }}</h1>
     <p class="meta">
       <time datetime="{{ date | htmlDateString }}">{{ date | date }}</time>
+      · {{ content | readTime }}
       {% if tags %}
         ·
         {% for tag in tags %}
@@ -23,4 +25,33 @@ layout: layouts/base.njk
   <div class="content prose">
     {{ content | safe }}
   </div>
+
+  <section class="post-share">
+    {% set abs = site.url + env.base + page.url %}
+    {% set text = (title or site.title) %}
+    <span>Share:</span>
+    <a class="btn" href="https://twitter.com/intent/tweet?url={{ abs | urlencode }}&text={{ text | urlencode }}" rel="noopener" target="_blank">Twitter</a>
+    <a class="btn" href="https://www.linkedin.com/shareArticle?mini=true&url={{ abs | urlencode }}&title={{ text | urlencode }}" rel="noopener" target="_blank">LinkedIn</a>
+  </section>
+
+  {% set shown = 0 %}
+  <section class="related">
+    <h2>Related Posts</h2>
+    <div class="posts grid">
+    {% for p in collections.posts %}
+      {% if p.url != page.url and p.data.tags and tags %}
+        {% set overlap = false %}
+        {% for t in p.data.tags %}
+          {% if t in tags %}{% set overlap = true %}{% endif %}
+        {% endfor %}
+        {% if overlap and shown < 3 %}
+          {% set post = p %}
+          {% include "../components/post_card.njk" %}
+          {% set shown = shown + 1 %}
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+    {% if shown == 0 %}<p class="meta">No related posts yet.</p>{% endif %}
+    </div>
+  </section>
 </article>

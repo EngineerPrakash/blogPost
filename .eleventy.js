@@ -14,12 +14,39 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addFilter("json", (value) => {
     try { return JSON.stringify(value); } catch { return "null"; }
   });
+  eleventyConfig.addFilter("excerpt", (content, words = 40) => {
+    if(!content) return "";
+    const text = String(content)
+      .replace(/<script[\s\S]*?<\/script>/gi, " ")
+      .replace(/<style[\s\S]*?<\/style>/gi, " ")
+      .replace(/<[^>]+>/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+    const parts = text.split(" ");
+    return (parts.length > words) ? parts.slice(0, words).join(" ") + "…" : text;
+  });
+  eleventyConfig.addFilter("readTime", (content) => {
+    if(!content) return "";
+    const words = String(content)
+      .replace(/<[^>]+>/g, " ")
+      .trim()
+      .split(/\s+/).filter(Boolean).length;
+    const minutes = Math.max(1, Math.round(words / 200));
+    return `${minutes} min read`;
+  });
   eleventyConfig.addFilter("htmlDateString", (dateObj) => {
     try {
       return new Date(dateObj).toISOString();
     } catch (e) {
       return new Date().toISOString();
     }
+  });
+  eleventyConfig.addFilter("split", (value, sep) => {
+    if (value === undefined || value === null) return [];
+    return String(value).split(sep || "/");
+  });
+  eleventyConfig.addFilter("urlencode", (value) => {
+    try { return encodeURIComponent(String(value)); } catch { return ""; }
   });
 
   // Collections
