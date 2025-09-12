@@ -12,5 +12,16 @@
     "domain": "",
     "src": "",
     "website_id": ""
+  },
+  "comments": {
+    "provider": "",
+    "giscus": {
+      "repo": "",
+      "repoId": "",
+      "category": "",
+      "categoryId": "",
+      "mapping": "pathname",
+      "theme": "preferred_color_scheme"
+    }
   }
 }

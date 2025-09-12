@@ -25,6 +25,10 @@
     <link rel="icon" href="{{ env.base }}/assets/favicon.svg" type="image/svg+xml" />
     <link rel="alternate" type="application/rss+xml" href="{{ env.base }}/feed.xml" title="{{ site.title }}" />
     <link rel="stylesheet" href="{{ env.base }}/assets/styles.css" />
+    {# Prism.js for syntax highlighting #}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/prism.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/autoloader/prism-autoloader.min.js" defer></script>
     <script src="{{ env.base }}/assets/site.js" defer></script>
   </head>
   <body>

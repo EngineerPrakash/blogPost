@@ -20,7 +20,14 @@ permalink: "/{% if pagination.pageNumber > 0 %}page/{{ pagination.pageNumber + 1
 <h2 id="posts">Latest Posts</h2>
 
 {% if posts and posts | length > 0 %}
-  {% set featured = posts[0] %}
+  {# pick a featured post if marked, else first #}
+  {% set featured = false %}
+  {% for p in posts %}
+    {% if (not featured) and ((p.data.featured == true) or (p.data.tags and ('featured' in p.data.tags))) %}
+      {% set featured = p %}
+    {% endif %}
+  {% endfor %}
+  {% if not featured %}{% set featured = posts[0] %}{% endif %}
   <article class="featured">
     {% if featured.data.cover %}
       <a class="cover" href="{{ env.base }}{{ featured.url }}">
@@ -40,7 +47,8 @@ permalink: "/{% if pagination.pageNumber > 0 %}page/{{ pagination.pageNumber + 1
 {% endif %}
 
 <div class="post-list">
-  {% for p in posts | slice(1) %}
+  {% for p in posts %}
+    {% if not (p.url == featured.url) %}
     <article class="post-row">
       <div class="info">
         <h3><a href="{{ env.base }}{{ p.url }}">{{ p.data.title }}</a></h3>
@@ -51,6 +59,7 @@ permalink: "/{% if pagination.pageNumber > 0 %}page/{{ pagination.pageNumber + 1
         <a class="btn" href="{{ env.base }}{{ p.url }}">Read</a>
       </div>
     </article>
+    {% endif %}
   {% endfor %}
 </div>
 
