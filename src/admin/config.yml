@@ -1,0 +1,38 @@
+backend:
+  name: github
+  repo: EngineerPrakash/blogPost
+  branch: main
+publish_mode: editorial_workflow
+media_folder: "src/assets/uploads"
+public_folder: "/assets/uploads"
+site_url: "https://EngineerPrakash.github.io/blogPost/"
+logo_url: "/assets/favicon.svg"
+collections:
+  - name: "posts"
+    label: "Posts"
+    label_singular: "Post"
+    folder: "src/posts"
+    create: true
+    slug: "{{slug}}"
+    preview_path: "posts/{{slug}}/"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text", required: false }
+      - { label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DD" }
+      - { label: "Tags", name: "tags", widget: "list", required: false }
+      - { label: "Featured", name: "featured", widget: "boolean", required: false, default: false }
+      - { label: "Cover Image", name: "cover", widget: "image", required: false }
+      - { label: "Layout", name: "layout", widget: "hidden", default: "layouts/post.njk" }
+      - { label: "Body", name: "body", widget: "markdown" }
+  - name: "pages"
+    label: "Pages"
+    files:
+      - file: "src/about.njk"
+        label: "About"
+        name: "about"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Permalink", name: "permalink", widget: "string" }
+          - { label: "Layout", name: "layout", widget: "hidden", default: "layouts/page.njk" }
+          - { label: "Body", name: "body", widget: "markdown" }
+

@@ -58,3 +58,16 @@
 
 - Replace `src/CNAME` with your domain (e.g., `blog.example.com`).
 - Update `src/_data/site.json` `url` to `https://your-domain` and keep `base` to `""`.
+-
+## In-Browser CMS (Decap)
+
+- Admin URL: `/admin/` (e.g., https://EngineerPrakash.github.io/blogPost/admin/)
+- Config: `src/admin/config.yml`
+- Media uploads go to `src/assets/uploads` and are served at `/assets/uploads`.
+
+### Authentication options
+
+- GitHub Pages + GitHub backend (current): requires a GitHub OAuth app and an OAuth provider endpoint. Recommended: deploy the open-source `netlify-cms-oauth-provider` to Vercel/Render and set its URL as `base_url` in `config.yml`.
+- Netlify hosting + Git Gateway (easiest): set `backend` to `git-gateway` and enable Netlify Identity + Git Gateway in your Netlify site.
+
+If you want, I can wire an OAuth provider function for Vercel and update `config.yml` automatically.
