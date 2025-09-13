@@ -2,6 +2,9 @@ backend:
   name: github
   repo: EngineerPrakash/blogPost
   branch: main
+  # Set these after deploying oauth-provider/ to Vercel
+  base_url: https://your-oauth-domain.vercel.app
+  auth_endpoint: /api/auth
 publish_mode: editorial_workflow
 media_folder: "src/assets/uploads"
 public_folder: "/assets/uploads"
@@ -35,4 +38,3 @@ collections:
           - { label: "Permalink", name: "permalink", widget: "string" }
           - { label: "Layout", name: "layout", widget: "hidden", default: "layouts/page.njk" }
           - { label: "Body", name: "body", widget: "markdown" }
-
