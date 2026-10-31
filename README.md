@@ -12,7 +12,14 @@
 - Tags are arrays in front matter, e.g. `tags: [tech, notes]`.
 - Add pages like `src/about.njk` using `layout: layouts/page.njk`.
 
-### Create a post
+### Daily workflow (recommended)
+
+1. Open `/write/` on your site, paste a GitHub fine-grained token once (Contents: read/write on this repo; stored only in your browser).
+2. Write the post, hit **Publish** — it commits to `src/posts/` and GitHub Pages rebuilds in ~1 minute.
+3. Drafts: tick "Save as draft" (`draft: true`, never built). Scheduling: use a future `date`; the site rebuilds daily at 00:15 UTC and publishes it once the date arrives.
+4. `/archive/` lists all posts by month and shows your current writing streak (also on the home page).
+
+### Create a post (alternatives)
 
 - CLI (recommended): `npm run new -- --title "My Post" --tags tech,notes --cover /assets/cover-abstract-1.svg`
 - GitHub UI: Use the header’s “New Post” link or go to `https://github.com/EngineerPrakash/blogPost/new/main?filename=src/posts/new-post.md` and paste the template shown on `/admin/`.

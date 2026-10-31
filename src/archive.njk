@@ -1,0 +1,20 @@
+---
+layout: layouts/page.njk
+title: Archive
+permalink: /archive/
+---
+
+<p class="muted">{{ collections.posts | length }} posts · current streak: <strong>{{ collections.posts | streak }} day{% if (collections.posts | streak) != 1 %}s{% endif %}</strong></p>
+
+{% set lastKey = "" %}
+{% for p in collections.posts %}
+  {% set key = (p.date | year) + " " + (p.date | monthName) %}
+  {% if key != lastKey %}
+    {% if lastKey != "" %}</ul>{% endif %}
+    <h2>{{ p.date | monthName }} {{ p.date | year }}</h2>
+    <ul>
+    {% set lastKey = key %}
+  {% endif %}
+  <li><time datetime="{{ p.date | htmlDateString }}">{{ p.date | date }}</time> — <a href="{{ env.base }}{{ p.url }}">{{ p.data.title }}</a></li>
+{% endfor %}
+{% if collections.posts | length %}</ul>{% endif %}
