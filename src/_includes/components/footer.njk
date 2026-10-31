@@ -1,6 +1,27 @@
 <footer class="site-footer">
-  <div class="container">
-    <p>© {{ site.author }} · <a href="/feed.xml">RSS</a></p>
+  <div class="container footer-widgets">
+    <section>
+      <h3>About</h3>
+      <p><strong>{{ site.title }}</strong><br><span class="muted">{{ site.tagline }}</span></p>
+      <a class="btn" href="{{ env.base }}/feed.xml">Subscribe via RSS</a>
+    </section>
+    <section>
+      <h3>Recent posts</h3>
+      <ul>
+        {% for p in collections.posts | slice(0,4) %}
+          <li><a href="{{ env.base }}{{ p.url }}">{{ p.data.title }}</a><span class="date">{{ p.date | date }}</span></li>
+        {% endfor %}
+      </ul>
+    </section>
+    <section>
+      <h3>Topics</h3>
+      <div class="tag-cloud">
+        {% for t in collections.tagList %}<a class="chip" href="{{ env.base }}/tag/{{ t | url }}/">{{ t }}</a>{% endfor %}
+      </div>
+    </section>
+  </div>
+  <div class="container footer-bottom">
+    <span>© {{ site.author }}</span>
+    <span><a href="{{ env.base }}/archive/">Archive</a> · <a href="{{ env.base }}/sitemap.xml">Sitemap</a></span>
   </div>
 </footer>
-

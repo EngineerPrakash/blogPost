@@ -8,11 +8,12 @@ pagination:
 permalink: /tag/{{ tag | url }}/
 ---
 
-<h1>#{{ tag }}</h1>
-<div class="posts">
-  {% for post in collections[tag] %}
-    {% set post = post %}
-    {% include "../_includes/components/post_card.njk" %}
-  {% endfor %}
+<div class="wrap-narrow tag-head">
+  <p class="meta"><a href="{{ env.base }}/tags/">← All topics</a></p>
+  <h1>#{{ tag }}</h1>
+  <div class="posts">
+    {% for post in collections[tag] %}
+      {% include "../_includes/components/post_card.njk" %}
+    {% endfor %}
+  </div>
 </div>
-

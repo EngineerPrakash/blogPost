@@ -1,14 +1,14 @@
 <header class="site-header">
   <div class="container header-inner">
-    <a class="brand" href="{{ env.base }}/">{{ site.title }}</a>
-    <nav class="nav">
-      <a href="{{ env.base }}/">Home</a>
-      <a href="{{ env.base }}/tags/">Tags</a>
-      <a href="{{ env.base }}/search/">Search</a>
-      <a href="{{ env.base }}/about/">About</a>
-      <a href="{{ env.base }}/feed.xml">RSS</a>
-      <a href="{{ env.base }}/archive/">Archive</a>
-      <a class="btn" href="{{ env.base }}/write/">Write</a>
+    <a class="brand" href="{{ env.base }}/"><span class="brand-mark" aria-hidden="true"></span>{{ site.title }}</a>
+    <nav class="nav" aria-label="Main">
+      <a href="{{ env.base }}/" {% if page.url == '/' %}aria-current="page"{% endif %}>Home</a>
+      <a href="{{ env.base }}/archive/" {% if page.url == '/archive/' %}aria-current="page"{% endif %}>Archive</a>
+      <a href="{{ env.base }}/tags/" {% if page.url == '/tags/' %}aria-current="page"{% endif %}>Tags</a>
+      <a href="{{ env.base }}/about/" {% if page.url == '/about/' %}aria-current="page"{% endif %}>About</a>
+      <a href="{{ env.base }}/search/" aria-label="Search" {% if page.url == '/search/' %}aria-current="page"{% endif %}>Search</a>
+      <button class="btn icon-btn theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor"/></svg></button>
+      <a class="btn btn-primary" href="{{ env.base }}/write/">Write</a>
     </nav>
     <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
       <span></span><span></span><span></span>
