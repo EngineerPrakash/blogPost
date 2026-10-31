@@ -1,0 +1,101 @@
+---
+layout: layouts/page.njk
+title: Write
+permalink: /write/
+eleventyExcludeFromCollections: true
+---
+
+<p class="muted">Write today's post here and publish it straight to GitHub — the site rebuilds automatically in about a minute.</p>
+
+<details id="setup" class="write-setup">
+  <summary><strong>One-time setup</strong>: GitHub token</summary>
+  <ol>
+    <li>Open <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub → New fine-grained token</a>.</li>
+    <li>Repository access: only <code>{{ site.repo.owner }}/{{ site.repo.name }}</code>. Permissions: <em>Contents → Read and write</em>.</li>
+    <li>Paste it below. It is stored only in this browser (localStorage) and sent only to api.github.com.</li>
+  </ol>
+  <input id="token" type="password" placeholder="github_pat_…" autocomplete="off" />
+  <button id="save-token" class="btn" type="button">Save token</button>
+  <button id="clear-token" class="btn" type="button">Remove</button>
+</details>
+
+<form id="post-form" class="write-form">
+  <label>Title <input id="f-title" required /></label>
+  <label>Description <input id="f-desc" /></label>
+  <div class="write-row">
+    <label>Date <input id="f-date" type="date" required /></label>
+    <label>Tags (comma separated) <input id="f-tags" placeholder="tech, notes" /></label>
+  </div>
+  <label>Cover image path (optional) <input id="f-cover" placeholder="/assets/cover-abstract-1.svg" /></label>
+  <label>Body (Markdown) <textarea id="f-body" rows="18" required></textarea></label>
+  <label class="inline"><input id="f-draft" type="checkbox" /> Save as draft (not published)</label>
+  <p class="muted">A future date schedules the post — it goes live on the first daily rebuild on or after that date.</p>
+  <button class="btn btn-primary" type="submit">Publish</button>
+  <span id="status" role="status"></span>
+</form>
+
+<script>
+(function(){
+  const repo = {{ site.repo | json | safe }};
+  const base = '{{ env.base or "" }}';
+  const $ = (id) => document.getElementById(id);
+  const TOKEN_KEY = 'ghToken', DRAFT_KEY = 'writeDraft';
+  const store = {
+    get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } },
+    set(k,v){ try { localStorage.setItem(k,v); } catch(e){} },
+    del(k){ try { localStorage.removeItem(k); } catch(e){} }
+  };
+  const fields = ['title','desc','date','tags','cover','body'];
+  const today = new Date(Date.now() - new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);
+  $('f-date').value = today;
+  if(!store.get(TOKEN_KEY)) $('setup').open = true;
+
+  // Autosave the in-progress draft locally
+  try {
+    const saved = JSON.parse(store.get(DRAFT_KEY) || '{}');
+    fields.forEach(f => { if(saved[f]) $('f-'+f).value = saved[f]; });
+  } catch(e){}
+  fields.forEach(f => $('f-'+f).addEventListener('input', () => {
+    const o = {}; fields.forEach(k => o[k] = $('f-'+k).value); store.set(DRAFT_KEY, JSON.stringify(o));
+  }));
+
+  $('save-token').onclick = () => { store.set(TOKEN_KEY, $('token').value.trim()); $('token').value=''; $('setup').open = false; };
+  $('clear-token').onclick = () => { store.del(TOKEN_KEY); };
+
+  const slugify = (s) => s.toLowerCase().normalize('NFKD').replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-').replace(/-+/g,'-') || 'post';
+  const q = (s) => JSON.stringify(s); // JSON strings are valid YAML scalars
+  const b64 = (s) => btoa(String.fromCharCode(...new TextEncoder().encode(s)));
+
+  $('post-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const status = $('status');
+    const token = store.get(TOKEN_KEY);
+    if(!token){ $('setup').open = true; status.textContent = 'Add your GitHub token first.'; return; }
+    const tags = $('f-tags').value.split(',').map(t => t.trim()).filter(Boolean);
+    const cover = $('f-cover').value.trim();
+    const fm = ['---',
+      'title: ' + q($('f-title').value.trim()),
+      'description: ' + q($('f-desc').value.trim()),
+      'date: ' + $('f-date').value,
+      'tags: [' + tags.map(q).join(', ') + ']',
+      cover ? 'cover: ' + q(cover) : null,
+      $('f-draft').checked ? 'draft: true' : null,
+      'layout: layouts/post.njk',
+      '---', '', $('f-body').value.trim(), ''].filter(x => x !== null).join('\n');
+    const path = `src/posts/${$('f-date').value}-${slugify($('f-title').value)}.md`;
+    status.textContent = 'Publishing…';
+    try {
+      const res = await fetch(`https://api.github.com/repos/${repo.owner}/${repo.name}/contents/${path}`, {
+        method: 'PUT',
+        headers: { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: 'Add post: ' + $('f-title').value.trim(), content: b64(fm), branch: repo.branch || 'main' })
+      });
+      const data = await res.json();
+      if(!res.ok) throw new Error(res.status === 422 ? 'A post with this date and title already exists.' : (data.message || res.status));
+      store.del(DRAFT_KEY);
+      $('post-form').reset(); $('f-date').value = today;
+      status.innerHTML = 'Saved! ' + ($('f-draft').checked ? '' : 'The site will be live in about a minute. ') + '<a href="' + data.content.html_url + '" target="_blank" rel="noopener">View on GitHub</a>';
+    } catch(err){ status.textContent = 'Failed: ' + err.message; }
+  });
+})();
+</script>

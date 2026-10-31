@@ -11,6 +11,8 @@ permalink: "/{% if pagination.pageNumber > 0 %}page/{{ pagination.pageNumber + 1
 <section class="hero">
   <h1>{{ site.title }}</h1>
   <p class="tagline">{{ site.tagline }}</p>
+  {% set streakDays = collections.posts | streak %}
+  {% if streakDays > 0 %}<p class="meta">🔥 {{ streakDays }}-day writing streak</p>{% endif %}
   <div class="hero-actions">
     <a class="btn btn-primary" href="#posts">Read Latest</a>
     <a class="btn" href="{{ env.base }}/tags/">Browse Tags</a>

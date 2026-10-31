@@ -57,6 +57,20 @@ module.exports = function (eleventyConfig) {
       .sort((a, b) => b.date - a.date);
   });
 
+  // Writing streak: consecutive days (ending today or yesterday) with a post
+  eleventyConfig.addFilter("streak", (posts) => {
+    const day = (d) => new Date(d).toISOString().slice(0, 10);
+    const days = new Set((posts || []).map((p) => day(p.date)));
+    const cur = new Date();
+    if (!days.has(day(cur))) cur.setUTCDate(cur.getUTCDate() - 1);
+    let n = 0;
+    while (days.has(day(cur))) { n++; cur.setUTCDate(cur.getUTCDate() - 1); }
+    return n;
+  });
+  eleventyConfig.addFilter("year", (d) => new Date(d).getUTCFullYear());
+  eleventyConfig.addFilter("monthName", (d) =>
+    new Intl.DateTimeFormat("en", { month: "long", timeZone: "UTC" }).format(new Date(d)));
+
   // Unique sorted tag list
   eleventyConfig.addCollection("tagList", (collectionApi) => {
     const tagSet = new Set();
