@@ -5,31 +5,16 @@
   function setTheme(t){ document.documentElement.setAttribute('data-theme', t); try{ localStorage.setItem(THEME_KEY, t);}catch(e){} }
   function getTheme(){ try{ return localStorage.getItem(THEME_KEY);}catch(e){ return null; } }
 
-  // Add a toggle button to header
-  function ensureToggle(){
-    const nav = document.querySelector('.nav');
-    if(!nav || nav.querySelector('.theme-toggle')) return;
-    const btn = document.createElement('button');
-    btn.className = 'theme-toggle';
-    btn.textContent = 'Theme';
-    btn.style.marginLeft = '14px';
-    btn.style.padding = '4px 8px';
-    btn.style.borderRadius = '8px';
-    btn.style.border = '1px solid var(--border)';
-    btn.style.background = '#0f131a';
-    btn.style.color = 'var(--text)';
+  function setupThemeToggle(){
+    const btn = document.querySelector('.theme-toggle');
+    if(!btn) return;
     btn.addEventListener('click', () => {
-      const current = document.documentElement.getAttribute('data-theme') || 'dark';
-      setTheme(current === 'dark' ? 'light' : 'dark');
+      const cur = document.documentElement.getAttribute('data-theme') || 'light';
+      setTheme(cur === 'dark' ? 'light' : 'dark');
     });
-    nav.appendChild(btn);
   }
-
-  // Initialize
-  const saved = getTheme();
-  if(saved) setTheme(saved); else setTheme('light');
-  if(document.readyState !== 'loading') ensureToggle();
-  else document.addEventListener('DOMContentLoaded', ensureToggle);
+  if(document.readyState !== 'loading') setupThemeToggle();
+  else document.addEventListener('DOMContentLoaded', setupThemeToggle);
 
   // Mobile nav toggle
   function setupNavToggle(){
@@ -99,22 +84,4 @@
   if(document.readyState !== 'loading') setupToTop();
   else document.addEventListener('DOMContentLoaded', setupToTop);
 
-  // Font size controls (A-/A+)
-  function setupFontControls(){
-    const nav = document.querySelector('.nav');
-    if(!nav || nav.querySelector('.font-minus')) return;
-    const minus = document.createElement('button');
-    const plus = document.createElement('button');
-    minus.className = 'btn font-minus'; minus.textContent = 'A-'; minus.style.marginLeft='8px';
-    plus.className = 'btn font-plus'; plus.textContent = 'A+'; plus.style.marginLeft='6px';
-    const clamp = v => Math.max(14, Math.min(20, v));
-    function apply(size){ document.documentElement.style.setProperty('--fontSize', size + 'px'); try{ localStorage.setItem(FONT_KEY, String(size)); }catch(e){} }
-    function current(){ try{ const v = parseInt(localStorage.getItem(FONT_KEY)||'16',10); return isNaN(v)?16:v; }catch(e){ return 16; } }
-    minus.addEventListener('click', () => apply(clamp(current()-1)));
-    plus.addEventListener('click', () => apply(clamp(current()+1)));
-    nav.appendChild(minus); nav.appendChild(plus);
-    apply(current());
-  }
-  if(document.readyState !== 'loading') setupFontControls();
-  else document.addEventListener('DOMContentLoaded', setupFontControls);
 })();

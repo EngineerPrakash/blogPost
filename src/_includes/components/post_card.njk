@@ -1,22 +1,14 @@
 <article class="post-card">
   {% if post.data.cover %}
     <a class="cover" href="{{ env.base }}{{ post.url }}">
-      <img src="{{ post.data.cover }}" alt="" loading="lazy" />
+      <img src="{{ env.base }}{{ post.data.cover }}" alt="" loading="lazy" />
     </a>
   {% endif %}
   <div class="card-body">
     <h2><a href="{{ env.base }}{{ post.url }}">{{ post.data.title }}</a></h2>
     <p class="meta">
-      <time datetime="{{ post.date | htmlDateString }}">{{ post.date | date }}</time>
-      {% if post.data.tags %}
-        ·
-        {% for tag in post.data.tags %}
-          <span class="chip">{{ tag }}</span>
-        {% endfor %}
-      {% endif %}
+      <time datetime="{{ post.date | htmlDateString }}">{{ post.date | date }}</time> · {{ post.templateContent | readTime }}
     </p>
-    {% if post.data.description %}
-      <p>{{ post.data.description }}</p>
-    {% endif %}
+    <p class="excerpt">{{ post.data.description or (post.templateContent | excerpt(24)) }}</p>
   </div>
 </article>

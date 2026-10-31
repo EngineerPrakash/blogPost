@@ -4,15 +4,12 @@ title: Tags
 permalink: /tags/
 ---
 
-<h1>All Tags</h1>
-<ul class="tag-list">
-  {% for tag in collections.tagList %}
-    <li>
-      <a href="{{ env.base }}/tag/{{ tag | url }}/">{{ tag }}</a>
-      <span class="count">({{ collections[tag].length }})</span>
-    </li>
-  {% endfor %}
-  {% if collections.tagList | length == 0 %}
-    <li>No tags yet.</li>
-  {% endif %}
-  </ul>
+<div class="wrap-narrow tag-head">
+  <h1>Topics</h1>
+  <div class="tag-cloud">
+    {% for tag in collections.tagList %}
+      <a class="chip" style="font-size:1rem;padding:6px 16px" href="{{ env.base }}/tag/{{ tag | url }}/">{{ tag }} · {{ collections[tag].length }}</a>
+    {% endfor %}
+    {% if collections.tagList | length == 0 %}<p class="muted">No tags yet.</p>{% endif %}
+  </div>
+</div>
